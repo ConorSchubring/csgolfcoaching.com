@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Coaching Packages — CS Golf</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.page-hero { background:var(--navy); padding:160px 24px 80px; text-align:center; position:relative; overflow:hidden; }
+.page-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle, rgba(184,147,62,0.12) 1px, transparent 1px); background-size:36px 36px; opacity:0.4; }
+.page-hero-content { position:relative; z-index:2; }
+.page-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(36px,7vw,64px); font-weight:900; color:var(--cream); margin-bottom:16px; }
+.page-hero h1 em { font-style:italic; color:var(--lgold); }
+.page-hero p { font-size:16px; color:rgba(253,251,246,0.6); max-width:560px; margin:16px auto 0; line-height:1.7; }
+
+/* First meeting */
+.first-meeting { background:var(--light); }
+.fm-card { background:var(--white); border-radius:6px; padding:40px 36px; border-top:4px solid var(--gold); box-shadow:0 4px 24px rgba(11,31,58,0.06); }
+.fm-card h3 { font-family:'Playfair Display',serif; font-size:26px; color:var(--navy); margin-bottom:8px; }
+.fm-card .subtitle { font-size:13px; color:var(--gray); letter-spacing:2px; text-transform:uppercase; margin-bottom:28px; display:block; }
+.fm-bullets { list-style:none; display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+@media(max-width:680px){ .fm-bullets{grid-template-columns:1fr;} }
+.fm-bullets li { display:flex; gap:14px; align-items:flex-start; }
+.fm-bullet-icon { width:36px; height:36px; background:var(--navy); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:2px solid var(--gold); }
+.fm-bullet-icon span { color:var(--gold); font-weight:900; font-size:13px; }
+.fm-bullets li p { font-size:14px; line-height:1.7; color:#555; padding-top:6px; }
+
+/* Packages */
+.packages { background:var(--cream); }
+.packages-header { text-align:center; margin-bottom:48px; }
+.offer-tag { display:inline-block; background:linear-gradient(135deg,var(--gold),var(--lgold)); color:var(--navy); font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:8px 20px; border-radius:20px; margin-bottom:20px; }
+
+.pkg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:32px; }
+@media(max-width:720px){ .pkg-grid{grid-template-columns:1fr;} }
+
+.pkg-card { border:1px solid #E0DDD5; border-radius:8px; overflow:hidden; background:var(--white); transition:all 0.3s; position:relative; }
+.pkg-card:hover { transform:translateY(-6px); box-shadow:0 16px 48px rgba(11,31,58,0.1); }
+.pkg-card.featured { border-color:var(--gold); border-width:2px; transform:translateY(-8px); box-shadow:0 16px 48px rgba(11,31,58,0.15); }
+.pkg-card.featured:hover { transform:translateY(-12px); }
+.pkg-badge { background:var(--gold); color:var(--navy); font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:8px 0; text-align:center; }
+.pkg-header { background:var(--navy); padding:28px 28px 20px; }
+.pkg-header.light { background:var(--light); }
+.pkg-tier { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; display:block; }
+.pkg-price { font-family:'Playfair Display',serif; font-size:52px; font-weight:900; color:var(--cream); line-height:1; }
+.pkg-header.light .pkg-price { color:var(--navy); }
+.pkg-per { font-size:13px; color:rgba(253,251,246,0.5); margin-top:4px; display:block; }
+.pkg-header.light .pkg-per { color:var(--gray); }
+.pkg-body { padding:28px; }
+.pkg-body ul { list-style:none; }
+.pkg-body ul li { font-size:14px; color:#555; padding:9px 0; border-bottom:1px solid #f0ede5; display:flex; gap:10px; align-items:flex-start; line-height:1.5; }
+.pkg-body ul li:last-child { border-bottom:none; }
+.pkg-body ul li::before { content:'✦'; color:var(--gold); font-size:10px; margin-top:2px; flex-shrink:0; }
+.pkg-footer { padding:0 28px 28px; }
+
+/* Hybrid */
+.hybrid-section { background:var(--light); }
+.hybrid-card { background:var(--navy); border-radius:8px; padding:48px 40px; display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center; border:2px solid var(--gold); }
+@media(max-width:680px){ .hybrid-card{grid-template-columns:1fr; text-align:center;} }
+.hybrid-badge { display:inline-block; background:var(--gold); color:var(--navy); font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 16px; border-radius:20px; margin-bottom:16px; }
+.hybrid-card h3 { font-family:'Playfair Display',serif; font-size:28px; color:var(--cream); margin-bottom:12px; }
+.hybrid-card p { font-size:15px; line-height:1.75; color:rgba(253,251,246,0.65); max-width:520px; margin-bottom:16px; }
+.hybrid-card ul { list-style:none; }
+.hybrid-card ul li { font-size:14px; color:rgba(253,251,246,0.6); padding:6px 0; display:flex; gap:10px; align-items:flex-start; }
+.hybrid-card ul li::before { content:'✦'; color:var(--gold); font-size:10px; margin-top:2px; flex-shrink:0; }
+.hybrid-price-block { text-align:center; flex-shrink:0; }
+.hybrid-amount { font-family:'Playfair Display',serif; font-size:56px; font-weight:900; color:var(--gold); line-height:1; display:block; }
+.hybrid-mo { font-size:13px; color:rgba(253,251,246,0.45); display:block; margin-bottom:20px; }
+
+/* What's included */
+.included { background:var(--navy); }
+.included-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+@media(max-width:680px){ .included-grid{grid-template-columns:repeat(2,1fr);} }
+.inc-item { text-align:center; padding:28px 16px; border:1px solid rgba(184,147,62,0.2); border-radius:4px; transition:all 0.3s; }
+.inc-item:hover { border-color:var(--gold); background:rgba(184,147,62,0.06); }
+.inc-icon { font-size:28px; margin-bottom:12px; display:block; }
+.inc-item h4 { font-family:'Playfair Display',serif; font-size:14px; color:var(--cream); margin-bottom:6px; }
+.inc-item p { font-size:12px; color:rgba(253,251,246,0.45); line-height:1.6; }
+
+.pkg-cta { background:var(--cream); text-align:center; padding:80px 24px; }
+.pkg-cta h2 { font-family:'Playfair Display',serif; font-size:clamp(28px,5vw,42px); color:var(--navy); margin-bottom:16px; }
+.pkg-cta h2 em { font-style:italic; color:var(--gold); }
+.pkg-cta p { font-size:16px; color:#666; max-width:480px; margin:0 auto 36px; line-height:1.75; }
+</style>
+</head>
+<body>
+<div class="gold-bar-top"></div>
+<nav>
+  <a href="index.html" class="nav-logo">CS <span>Golf</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="coaching.html" class="active">Coaching</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get Started</a>
+  <div class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <span class="section-label" style="display:flex;justify-content:center;margin-bottom:16px;">Packages & Pricing</span>
+    <h1>Coaching<br><em>Plans</em></h1>
+    <p>Flexible options built around your schedule, your goals, and your game. Every plan starts with a free first month for founding members.</p>
+  </div>
+</div>
+
+<!-- FIRST MEETING -->
+<section class="first-meeting">
+  <div class="container">
+    <span class="section-label">Where We Start</span>
+    <h2 class="section-title">The First<br><em>Meeting</em></h2>
+    <div class="divider"></div>
+    <div class="fm-card">
+      <h3>Your Onboarding Session</h3>
+      <span class="subtitle">Included with every plan · No charge</span>
+      <ul class="fm-bullets">
+        <li>
+          <div class="fm-bullet-icon"><span>1</span></div>
+          <p>A FaceTime or phone call to get to know one another — your background, your game, your goals.</p>
+        </li>
+        <li>
+          <div class="fm-bullet-icon"><span>2</span></div>
+          <p>A full in-depth analysis of every part of your game: swing, short game, and putting.</p>
+        </li>
+        <li>
+          <div class="fm-bullet-icon"><span>3</span></div>
+          <p>Once your goals are established, we create a detailed, personalized plan to get you there.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages">
+  <div class="container">
+    <div class="packages-header">
+      <div class="offer-tag">🏌️ Free First Month — First 10 Members</div>
+      <span class="section-label" style="display:block;">Online Coaching</span>
+      <h2 class="section-title">Fully Online<br><em>Coaching Plans</em></h2>
+      <div class="divider" style="margin:0 auto 16px;"></div>
+      <p style="color:#666;font-size:15px;max-width:560px;margin:0 auto;">Virtual sessions from anywhere in the world. Live FaceTime on the range or video breakdown using high-level performance technology.</p>
+    </div>
+
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <div class="pkg-header light">
+          <span class="pkg-tier">Monthly</span>
+          <div class="pkg-price">$100</div>
+          <span class="pkg-per">per month</span>
+        </div>
+        <div class="pkg-body">
+          <ul>
+            <li>1 coaching session per month</li>
+            <li>Video swing analysis & breakdown</li>
+            <li>Personalized practice plan</li>
+            <li>Email support between sessions</li>
+            <li>Goal tracking & progress review</li>
+          </ul>
+        </div>
+        <div class="pkg-footer">
+          <a href="contact.html" class="btn btn-navy" style="width:100%;text-align:center;display:block;">Get Started</a>
+        </div>
+      </div>
+
+      <div class="pkg-card featured">
+        <div class="pkg-badge">Most Popular</div>
+        <div class="pkg-header">
+          <span class="pkg-tier">Weekly</span>
+          <div class="pkg-price">$225</div>
+          <span class="pkg-per">per month</span>
+        </div>
+        <div class="pkg-body">
+          <ul>
+            <li>4 coaching sessions per month</li>
+            <li>Live FaceTime sessions on the range</li>
+            <li>High-level video performance analysis</li>
+            <li>Weekly practice plan & drills</li>
+            <li>Priority email & message support</li>
+            <li>Full goal roadmap & tracking</li>
+          </ul>
+        </div>
+        <div class="pkg-footer">
+          <a href="contact.html" class="btn btn-gold" style="width:100%;text-align:center;display:block;">Get Started</a>
+        </div>
+      </div>
+
+      <div class="pkg-card">
+        <div class="pkg-header light">
+          <span class="pkg-tier">Bi-Weekly</span>
+          <div class="pkg-price">$150</div>
+          <span class="pkg-per">per month</span>
+        </div>
+        <div class="pkg-body">
+          <ul>
+            <li>2 coaching sessions per month</li>
+            <li>Video swing analysis & breakdown</li>
+            <li>Bi-weekly practice plan & drills</li>
+            <li>Email support between sessions</li>
+            <li>Goal tracking & progress review</li>
+          </ul>
+        </div>
+        <div class="pkg-footer">
+          <a href="contact.html" class="btn btn-navy" style="width:100%;text-align:center;display:block;">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HYBRID -->
+<section class="hybrid-section">
+  <div class="container">
+    <span class="section-label">For Local Players</span>
+    <h2 class="section-title">Hybrid<br><em>Coaching Model</em></h2>
+    <div class="divider"></div>
+    <div class="hybrid-card">
+      <div>
+        <span class="hybrid-badge">Local Players Only</span>
+        <h3>In-Person + Online Combined</h3>
+        <p>The same feedback loop the pros rely on. A hybrid balance gives you consistent improvement through both face-to-face and virtual coaching.</p>
+        <ul>
+          <li>One in-person lesson per month</li>
+          <li>Weekly online coaching sessions in between</li>
+          <li>Video analysis & performance technology</li>
+          <li>Full goal roadmap & personalized drills</li>
+          <li>Priority support between sessions</li>
+        </ul>
+      </div>
+      <div class="hybrid-price-block">
+        <span class="hybrid-amount">$300</span>
+        <span class="hybrid-mo">per month</span>
+        <a href="contact.html" class="btn btn-gold">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included">
+  <div class="container">
+    <span class="section-label">Every Plan Includes</span>
+    <h2 class="section-title" style="color:var(--cream)">Always<br><em>Included</em></h2>
+    <div class="divider"></div>
+    <div class="included-grid">
+      <div class="inc-item">
+        <span class="inc-icon">📞</span>
+        <h4>Intro Call</h4>
+        <p>Free onboarding call to discuss your game and goals.</p>
+      </div>
+      <div class="inc-item">
+        <span class="inc-icon">📋</span>
+        <h4>Custom Plan</h4>
+        <p>A personalized roadmap built specifically for you.</p>
+      </div>
+      <div class="inc-item">
+        <span class="inc-icon">🎥</span>
+        <h4>Video Analysis</h4>
+        <p>Detailed breakdowns using performance technology.</p>
+      </div>
+      <div class="inc-item">
+        <span class="inc-icon">🎯</span>
+        <h4>Goal Tracking</h4>
+        <p>Structured progress reviews to keep you on track.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pkg-cta">
+  <div class="container">
+    <span class="section-label" style="display:block;text-align:center;">Start Today</span>
+    <h2>First Month<br><em>On Conor</em></h2>
+    <p>10 founding member spots available. The free first month is a limited offer — claim yours before it's gone.</p>
+    <a href="contact.html" class="btn btn-gold">Claim Your Free Month →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><h3>CS <span>Golf</span></h3><p>Personalized online golf coaching from a touring professional. Built around your goals, delivered anywhere in the world.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="coaching.html">Coaching</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="mailto:conorschubring28@gmail.com">conorschubring28@gmail.com</a><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 CS Golf Coaching · Conor Schubring</p><p>csgolfcoaching.com</p></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CS Golf Coaching — Conor Schubring</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; background: var(--navy);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 120px 24px 80px; position: relative; overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(184,147,62,0.15) 1px, transparent 1px);
+  background-size: 36px 36px;
+  animation: gridDrift 24s linear infinite; opacity: 0.45;
+}
+@keyframes gridDrift { 0%{background-position:0 0} 100%{background-position:36px 36px} }
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 25% 60%, rgba(184,147,62,0.1) 0%, transparent 55%),
+              radial-gradient(ellipse at 75% 20%, rgba(11,31,58,0.8) 0%, transparent 60%);
+}
+.hero-content { position:relative; z-index:2; max-width:760px; }
+.hero-eyebrow { font-size:11px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:var(--gold); margin-bottom:22px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(48px,9vw,88px); font-weight:900; color:var(--cream); line-height:1.0; margin-bottom:12px; }
+.hero h1 em { font-style:italic; color:var(--lgold); }
+.hero-name { font-size:clamp(13px,2vw,15px); font-weight:300; letter-spacing:4px; text-transform:uppercase; color:rgba(253,251,246,0.6); margin-bottom:32px; }
+.hero-desc { font-size:17px; line-height:1.8; color:rgba(253,251,246,0.75); max-width:560px; margin:0 auto 40px; }
+.hero-badge {
+  display:inline-block; background:linear-gradient(135deg,var(--gold),var(--lgold));
+  color:var(--navy); font-family:'Playfair Display',serif; font-size:15px; font-weight:700;
+  padding:13px 30px; border-radius:2px; margin-bottom:40px; position:relative; overflow:hidden;
+}
+.hero-badge::after { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
+  animation:shine 3.5s ease infinite 1.5s; }
+.hero-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.hero-scroll { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); z-index:2; }
+.hero-scroll a { color:rgba(253,251,246,0.4); font-size:11px; letter-spacing:3px; text-transform:uppercase; text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:8px; transition:color 0.2s; }
+.hero-scroll a:hover { color:var(--gold); }
+.scroll-arrow { width:1px; height:40px; background:linear-gradient(to bottom, rgba(184,147,62,0.6), transparent); margin:0 auto; }
+
+/* ── OFFER STRIP ── */
+.offer-strip { background:linear-gradient(135deg,var(--gold),var(--lgold)); padding:20px 24px; text-align:center; }
+.offer-strip p { font-family:'Playfair Display',serif; font-size:clamp(14px,2.5vw,17px); color:var(--navy); font-weight:700; }
+.offer-strip em { font-style:italic; font-weight:400; }
+
+/* ── ABOUT ── */
+.about { background:var(--cream); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+@media(max-width:680px){ .about-grid{grid-template-columns:1fr; gap:36px;} }
+.about-text p { font-size:16px; line-height:1.85; color:#555; margin-bottom:20px; }
+.about-text p strong { color:var(--navy); }
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.stat-card { background:var(--navy); padding:26px 20px; border-radius:4px; position:relative; overflow:hidden; transition:transform 0.3s; }
+.stat-card:hover { transform:translateY(-4px); }
+.stat-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--gold); }
+.stat-card .num { font-family:'Playfair Display',serif; font-size:28px; font-weight:900; color:var(--gold); display:block; }
+.stat-card .lbl { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(253,251,246,0.55); margin-top:6px; display:block; }
+
+/* ── PILLARS ── */
+.pillars { background:var(--navy); }
+.pillars-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+@media(max-width:680px){ .pillars-grid{grid-template-columns:1fr;} }
+.pillar-card { border:1px solid rgba(184,147,62,0.2); border-top:3px solid var(--gold); padding:32px 24px; border-radius:4px; transition:all 0.3s; background:rgba(255,255,255,0.03); }
+.pillar-card:hover { background:rgba(184,147,62,0.08); transform:translateY(-5px); border-color:var(--gold); }
+.pillar-icon { font-size:30px; margin-bottom:18px; display:block; }
+.pillar-card h3 { font-family:'Playfair Display',serif; font-size:19px; color:var(--cream); margin-bottom:12px; }
+.pillar-card p { font-size:14px; line-height:1.75; color:rgba(253,251,246,0.6); }
+
+/* ── PROCESS ── */
+.process { background:var(--light); }
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+@media(max-width:680px){ .steps{grid-template-columns:1fr;} }
+.step { text-align:center; padding:36px 20px; background:var(--white); border-radius:4px; border-bottom:3px solid var(--gold); transition:transform 0.3s; }
+.step:hover { transform:translateY(-4px); }
+.step-num { width:54px; height:54px; border-radius:50%; background:var(--navy); color:var(--gold); font-family:'Playfair Display',serif; font-size:22px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; border:2px solid var(--gold); }
+.step h3 { font-family:'Playfair Display',serif; font-size:18px; color:var(--navy); margin-bottom:12px; }
+.step p { font-size:14px; line-height:1.75; color:var(--gray); }
+
+/* ── QUOTE ── */
+.quote-section { background:var(--navy); padding:80px 24px; text-align:center; }
+.quote-inner { max-width:720px; margin:0 auto; }
+.quote-mark { font-family:'Playfair Display',serif; font-size:80px; color:rgba(184,147,62,0.25); line-height:0.6; display:block; margin-bottom:20px; }
+.quote-text { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,24px); font-style:italic; color:var(--pale); line-height:1.7; margin-bottom:24px; }
+.quote-attr { font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); }
+
+/* ── PRICING PREVIEW ── */
+.pricing-preview { background:var(--cream); }
+.pricing-mini-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:24px; }
+@media(max-width:680px){ .pricing-mini-grid{grid-template-columns:1fr;} }
+.pricing-mini { border:1px solid #E0DDD5; border-radius:6px; padding:28px 20px; text-align:center; background:var(--white); transition:all 0.3s; }
+.pricing-mini:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(11,31,58,0.08); }
+.pricing-mini.feat { background:var(--navy); border-color:var(--gold); transform:translateY(-6px); }
+.pricing-mini.feat:hover { transform:translateY(-10px); }
+.pricing-mini .tier { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.pricing-mini .price { font-family:'Playfair Display',serif; font-size:44px; font-weight:900; color:var(--navy); line-height:1; }
+.pricing-mini.feat .price { color:var(--gold); }
+.pricing-mini .per { font-size:12px; color:var(--gray); margin-bottom:0; }
+.pricing-mini.feat .per { color:rgba(253,251,246,0.45); }
+.view-all { text-align:center; margin-top:32px; }
+
+/* ── BOTTOM CTA ── */
+.bottom-cta { background:var(--navy); padding:100px 24px; text-align:center; position:relative; overflow:hidden; }
+.bottom-cta::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(184,147,62,0.1) 0%, transparent 65%); }
+.bottom-cta .section-title { color:var(--cream); position:relative; }
+.bottom-cta p { font-size:17px; line-height:1.75; color:rgba(253,251,246,0.65); max-width:500px; margin:0 auto 40px; position:relative; }
+.email-big { display:inline-block; font-family:'Playfair Display',serif; font-size:22px; font-style:italic; color:var(--gold); text-decoration:none; margin-bottom:36px; position:relative; }
+.email-big::after { content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px; background:var(--gold); transform:scaleX(0); transition:transform 0.3s; }
+.email-big:hover::after { transform:scaleX(1); }
+</style>
+</head>
+<body>
+
+<div class="gold-bar-top"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">CS <span>Golf</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="coaching.html">Coaching</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get Started</a>
+  <div class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow fade-up delay-1">Online Golf Coaching</p>
+    <h1 class="fade-up delay-2">Elevate Your<br><em>Entire Game</em></h1>
+    <p class="hero-name fade-up delay-3">Conor Schubring Golf Coaching</p>
+    <p class="hero-desc fade-up delay-3">Intense, personable coaching from a touring professional who's been there and done that. Built around your goals. Delivered anywhere in the world.</p>
+    <div class="hero-badge fade-up delay-4">🏌️ FREE First Month — First 10 Members Only</div>
+    <div class="hero-btns fade-up delay-5">
+      <a href="contact.html" class="btn btn-gold">Claim Your Spot</a>
+      <a href="coaching.html" class="btn btn-outline">View Packages</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <a href="#about">
+      <div class="scroll-arrow"></div>
+      Scroll
+    </a>
+  </div>
+</section>
+
+<!-- OFFER STRIP -->
+<div class="offer-strip">
+  <p>🏆 Limited offer: <em>Free first month</em> for the first 10 founding members. Spots are filling fast. ✦</p>
+</div>
+
+<!-- ABOUT PREVIEW -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="section-label">About Your Coach</span>
+        <h2 class="section-title">Been There.<br><em>Done That.</em></h2>
+        <div class="divider"></div>
+        <p>I'm Conor Schubring — a touring professional golfer since 2024 with real competitive experience at the highest levels. A 2-time Conference Player of the Year, PING All-American, and PGA Level 1 Associate, I've lived the grind, the pressure, and the discipline it takes to reach your goals.</p>
+        <p>Now I'm bringing everything I've learned directly to you. <strong>No fluff. No generic tips.</strong> Just focused, personalized coaching built around where you are and where you want to go.</p>
+        <a href="about.html" class="btn btn-navy" style="margin-top:8px;">My Full Story →</a>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="num">Pro</span>
+          <span class="lbl">Since 2024</span>
+        </div>
+        <div class="stat-card">
+          <span class="num">PGA</span>
+          <span class="lbl">Level 1 Associate</span>
+        </div>
+        <div class="stat-card">
+          <span class="num">2×</span>
+          <span class="lbl">Conference Player of the Year</span>
+        </div>
+        <div class="stat-card">
+          <span class="num">PING</span>
+          <span class="lbl">All-American</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<div class="creds-strip">
+  <div class="container">
+    <span class="section-label" style="text-align:center;display:block;margin-bottom:28px;">Credentials & Achievements</span>
+    <div class="creds-grid">
+      <div class="cred-card">
+        <span class="cred-icon">⛳</span>
+        <div class="cred-title">Professional Golfer<br>Since 2024</div>
+        <span class="cred-sub">Touring Pro</span>
+      </div>
+      <div class="cred-card">
+        <span class="cred-icon"><img src="pga-logo.jpg" alt="PGA of America" style="width:44px;height:44px;object-fit:cover;border-radius:4px;"/></span>
+        <div class="cred-title">PGA Level 1<br>Associate</div>
+        <span class="cred-sub">PGA of America</span>
+      </div>
+      <div class="cred-card">
+        <span class="cred-icon">🥇</span>
+        <div class="cred-title">2× Conference<br>Player of the Year</div>
+        <span class="cred-sub">Back-to-Back</span>
+      </div>
+      <div class="cred-card">
+        <span class="cred-icon">🏆</span>
+        <div class="cred-title">PING<br>All-American</div>
+        <span class="cred-sub">Elite Collegiate Honor</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section class="pillars">
+  <div class="container">
+    <span class="section-label">What You Get</span>
+    <h2 class="section-title" style="color:var(--cream)">More Than Just a<br><em>Swing Coach</em></h2>
+    <div class="divider"></div>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <span class="pillar-icon">🏌️</span>
+        <h3>Full Game Analysis</h3>
+        <p>Swing, short game, putting, course management — we cover every part of your game with a deep, honest breakdown.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">📱</span>
+        <h3>Coach From Anywhere</h3>
+        <p>Live FaceTime on the range, video breakdowns with high-level tech, weekly check-ins — your schedule, your location.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">🎯</span>
+        <h3>Your Personal Roadmap</h3>
+        <p>After a full assessment we build a custom plan around your specific goals. No cookie-cutter programs — ever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="container">
+    <span class="section-label">How It Works</span>
+    <h2 class="section-title">Getting Started is<br><em>Simple</em></h2>
+    <div class="divider"></div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Reach Out</h3>
+        <p>Email Conor and we'll set up a free intro call to get to know each other and discuss your game and goals.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Full Assessment</h3>
+        <p>Deep dive into every part of your game — swing, short game, putting, course management, and mental approach.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Build & Execute</h3>
+        <p>Get a personalized coaching plan and start making real progress — from wherever you are in the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <div class="quote-inner">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">Receive intense and personable coaching from a professional golfer who has been there and done that. Through the experience and knowledge attained, I am looking forward to helping people reach their goals!</p>
+    <span class="quote-attr">— Conor Schubring, CS Golf Coaching</span>
+  </div>
+</div>
+
+<!-- PRICING PREVIEW -->
+<section class="pricing-preview">
+  <div class="container">
+    <span class="section-label">Pricing</span>
+    <h2 class="section-title">Simple,<br><em>Transparent Plans</em></h2>
+    <div class="divider"></div>
+    <div class="pricing-mini-grid">
+      <div class="pricing-mini">
+        <p class="tier">Monthly</p>
+        <p class="price">$100</p>
+        <p class="per">/ month</p>
+      </div>
+      <div class="pricing-mini feat">
+        <p class="tier">Weekly</p>
+        <p class="price">$225</p>
+        <p class="per">/ month</p>
+      </div>
+      <div class="pricing-mini">
+        <p class="tier">Bi-Weekly</p>
+        <p class="price">$150</p>
+        <p class="per">/ month</p>
+      </div>
+    </div>
+    <div class="view-all">
+      <a href="coaching.html" class="btn btn-navy">See All Packages →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <div class="container">
+    <span class="section-label">Ready?</span>
+    <h2 class="section-title">10 Spots.<br><em>First Month Free.</em></h2>
+    <p>Don't wait — founding member spots are limited and this offer won't last. Email Conor today and let's get to work.</p>
+    <br>
+    <a class="email-big" href="mailto:conorschubring28@gmail.com?subject=I'm interested in CS Golf Coaching">conorschubring28@gmail.com</a>
+    <br><br>
+    <a href="contact.html" class="btn btn-gold">Claim Your Free Month →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>CS <span>Golf</span></h3>
+      <p>Personalized online golf coaching from a touring professional. Built around your goals, delivered anywhere in the world.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="coaching.html">Coaching</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:conorschubring28@gmail.com">conorschubring28@gmail.com</a>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="https://tiktok.com" target="_blank">TikTok</a>
+      <a href="https://facebook.com" target="_blank">Facebook</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CS Golf Coaching · Conor Schubring</p>
+    <p>csgolfcoaching.com</p>
+  </div>
+</footer>
+
+</body>
+</html>
